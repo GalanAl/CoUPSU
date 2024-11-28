@@ -15,6 +15,7 @@
 
 apt update
 apt install bash git make g++ cmake wget libgmp-dev libntl-dev
-cd; wget https://gricad-gitlab.univ-grenoble-alpes.fr/Alexis.Galan/unbalancedprivatesetunion/-/raw/main/coupsu-auto-install.sh
+cd; wget https://raw.githubusercontent.com/GalanAl/CoUPSU/refs/heads/main/bin/coupsu-auto-install.sh
 chmod +x ./coupsu-auto-install.sh ; ./coupsu-auto-install.sh 56
-./libcoupsu/unbalancedprivatesetunion/tests/test_scal_prod_protocol 0 1
+./CoUPSU/main/bin/CoUPSU_bentchmark 0 1 56
+./CoUPSU/main/bin/CoUPSU_bentchmark 1 1 56
