@@ -12,7 +12,7 @@ OPTFLAGS=-Ofast -march=native
 
 # UPSU FLAGS
 UPSUFLAGS=-Iinclude -I../include
-OBJ=CoUPSU_bentchmark
+OBJ=CoUPSU_benchmark
 
 # HELIB FLAGS
 HELFLAGS = -fopenmp -std=c++17
