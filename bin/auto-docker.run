@@ -1,0 +1,20 @@
+#####################################################
+### COUPSU
+###       (c) 2024
+### us ...
+#####################################################
+
+#####################################################
+### Requirements: we suppose an existing environment,
+###           with git, cmake, c++, GMP, LinBox, etc.
+### For instance via a virtual machine (here docker):
+# > sudo docker run -it debian:12 bash
+
+#####################################################
+### Install & run benchmarks, within the environment:
+
+apt update
+apt install bash git make g++ cmake wget libgmp-dev libntl-dev
+cd; wget https://gricad-gitlab.univ-grenoble-alpes.fr/Alexis.Galan/unbalancedprivatesetunion/-/raw/main/coupsu-auto-install.sh
+chmod +x ./coupsu-auto-install.sh ; ./coupsu-auto-install.sh 56
+./libcoupsu/unbalancedprivatesetunion/tests/test_scal_prod_protocol 0 1
