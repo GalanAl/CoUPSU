@@ -3,7 +3,6 @@
  ****************************************************************/
 
 #pragma once
-#include "UPSU/BGV_rand_gen_set.h"
 #include "UPSU/utils.h"
 
 using namespace std;
