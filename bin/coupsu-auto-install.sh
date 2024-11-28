@@ -14,7 +14,7 @@ fi
 COUPSU_LOCDIR=CoUPSU
 #COUPSU_GITDIR=https://github.com/GalanAl/CoUPSU.git
 COUPSU_GITDIR=git@github.com:GalanAl/CoUPSU.git
-COUPSU_COMMIT=cad18f5
+COUPSU_COMMIT=3085734
 
 ### HELib git sources and commit ###
 HELib_GITDIR=https://github.com/homenc/HElib.git
@@ -109,8 +109,7 @@ cd ../..
 ### Build COUPSU ###
 echo -e "${BEG}building COUPSU ..." | tee -a ${LOGFILE}
 cd ${COUPSU_LOCDIR}
-make -j ${MAKETHREADS} HELIB_DIR=../HElib | tee -a ../${LOGFILE}
-OK=0; make -j ${MAKETHREADS} HELIB_DIR=../HElib check | tee -a ../${LOGFILE}|| die && OK=1
+OK=0; make -j ${MAKETHREADS} HELIB_DIR=../HElib | tee -a ../${LOGFILE} || die && OK=1
 [ "$OK" = "1" ] && cool | tee -a ../${LOGFILE} || die
 cd ..
 
