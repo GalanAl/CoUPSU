@@ -109,7 +109,8 @@ int main(int argc, char* argv[])
     if(bool(size_inter != R_size + S_size - R_set.size())){
         cerr<<"\033[1;31m##### Correctness Failure! #####\033[0m"<<endl;exit(0);
     } else {
-        clog<<"\033[1;32m[SUCCESS] Union OK.\033[0m"<<endl;
+        clog<<"\033[1;32m[SUCCESS] |" << R_size << "| U |" << S_size
+            << "| --> " << R_set.size() << ", Union OK.\033[0m"<<endl;
     }
     detail = 0;
   }
