@@ -56,9 +56,9 @@ int main(int argc, char* argv[])
   cout<<"Number of tasks : "<<(argc>3?atoi(argv[3]):numthreads)<<endl;
   
   unsigned long m,p,bits;
-  if (lambda <= 5)
+  if (lambda <= 6)
   {
-    vector<int> liste( {380,460,520,580,640,700});
+    vector<int> liste( {380,460,520,580,640,700,750});
     m=64*1024;p=6143; bits = liste[lambda];
   }
   else 
