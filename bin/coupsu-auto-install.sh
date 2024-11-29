@@ -12,8 +12,7 @@ fi
 
 ### COUPSU git sources and commit ###
 COUPSU_LOCDIR=CoUPSU
-#COUPSU_GITDIR=https://github.com/GalanAl/CoUPSU.git
-COUPSU_GITDIR=git@github.com:GalanAl/CoUPSU.git
+COUPSU_GITDIR=https://github.com/GalanAl/CoUPSU.git
 COUPSU_COMMIT=ca38d89
 
 ### HELib git sources and commit ###

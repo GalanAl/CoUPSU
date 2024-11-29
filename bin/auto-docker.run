@@ -1,16 +1,16 @@
-#####################################################
-### COUPSU
-###       (c) 2024
-### us ...
-#####################################################
+############################################################
+### COUPSU (c) 2024
+### Communication Optimal Unbalanced Private Set Union       
+### J-G. Dumas, A. Galan, B. Grenet, A. Maignan, D. S. Roche
+############################################################
 
-#####################################################
+############################################################
 ### Requirements: we suppose an existing environment,
 ###           with git, cmake, c++, GMP, LinBox, etc.
 ### For instance via a virtual machine (here docker):
 # > sudo docker run -it debian:12 bash
 
-#####################################################
+############################################################
 ### Install & run benchmarks, within the environment:
 
 apt update
@@ -18,4 +18,4 @@ apt install bash git make g++ cmake wget libgmp-dev libntl-dev
 cd; wget https://raw.githubusercontent.com/GalanAl/CoUPSU/refs/heads/main/bin/coupsu-auto-install.sh
 chmod +x ./coupsu-auto-install.sh ; ./coupsu-auto-install.sh 56
 ./CoUPSU/main/bin/CoUPSU_benchmark 0 1 56
-./CoUPSU/main/bin/CoUPSU_benchmark 1 1 56
+./CoUPSU/main/bin/CoUPSU_benchmark 1 5 56
