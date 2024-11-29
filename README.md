@@ -23,7 +23,7 @@
 
 ## Docker install 
 
-- Fetch and run [bin/auto-docker.run](https://raw.githubusercontent.com/GalanAl/CoUPSU/refs/heads/main/bin/auto-docker.run)
+- Fetch and run [bin/auto-docker.run](https://github.com/GalanAl/CoUPSU/blob/main/bin/auto-docker.run)
 	- Requires a linux docker virtual machine or sudoer rights to install packages.
 	- Will install distribution packages: `bash`, `make`, `wget`, `git`, `g++`, `cmake`, `libgmp-dev`, `libntl-dev`.
 	- Then clone and install the `HElib` and `HEXL` libraries.
