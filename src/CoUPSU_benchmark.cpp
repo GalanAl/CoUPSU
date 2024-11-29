@@ -28,7 +28,7 @@ using namespace NTL;
 
 int main(int argc, char* argv[])
 {
-// argv[1] <- (log(n)-10)/2 (between 0 and 5)
+// argv[1] <- (log(n)-10)/2 (between 0 and 6)
 // argv[2] <- number of tests (default 3)
 // argv[3] <- number of parallel tasks (default number of threads)
 
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
   }
   else
   {
-    printf("Too much depth required. Choose 0<=argv[1]<=5\n");
+    printf("Too much depth required. Choose 0<=argv[1]<=6\n");
     exit(0);
   }
 
