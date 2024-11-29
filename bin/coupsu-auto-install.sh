@@ -13,7 +13,7 @@ fi
 ### COUPSU git sources and commit ###
 COUPSU_LOCDIR=CoUPSU
 COUPSU_GITDIR=https://github.com/GalanAl/CoUPSU.git
-COUPSU_COMMIT=b9b3048
+COUPSU_COMMIT=v1.0
 
 ### HELib git sources and commit ###
 HELib_GITDIR=https://github.com/homenc/HElib.git
@@ -22,7 +22,7 @@ HELib_COMMIT=3e337a6
 ### HEXL git sources and branch ###
 HEXL_GITDIR=https://github.com/jgdumas/hexl.git
 HEXL_BRANCH=1.2.1
-HEXL_COMMIT=ce1954153ebb27c6f4d42c98269c5b507b144434
+HEXL_COMMIT=v1.2.1
 
 ###  ###
 LOGFILE=libcoupsu-auto-install.log
