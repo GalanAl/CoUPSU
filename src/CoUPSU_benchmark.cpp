@@ -1,16 +1,16 @@
 // ==========================================================================
 // CoUPSU: Communication Optimal Unbalanced Private Set Union
-// Reference: [ACNS 2025: 23rd International Conference on Applied 
-// Cryptography and Network Security, 
-// J-G. Dumas, A. Galan, B. Grenet, A. Maignan, D. S. Roche, 
+// Reference: [ACNS 2025: 23rd International Conference on Applied
+// Cryptography and Network Security,
+// J-G. Dumas, A. Galan, B. Grenet, A. Maignan, D. S. Roche,
 // https://arxiv.org/abs/2402.16393 ]
 // Authors: J-G Dumas, A. Galan, B. Grenet, A. Maignan, D. S. Roche.
 //
 // This software is governed by the CeCILL-B license under French law and
-// abiding by the rules of distribution of free software.  You can  use, 
+// abiding by the rules of distribution of free software.  You can  use,
 // modify and/ or redistribute the software under the terms of the CeCILL-B
 // license as circulated by CEA, CNRS and INRIA at the following URL
-// "http://www.cecill.info". 
+// "http://www.cecill.info".
 // ==========================================================================
 
 /****************************************************************
@@ -18,9 +18,9 @@
  ****************************************************************/
 #include "UPSU/CoUPSU_lib.h"
 
-#include <stdio.h>   
-#include <stdlib.h>    
-#include <time.h>       
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 using namespace helib;
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
   }
   int lambda = atoi(argv[1]);
   int nb_test = (argc>2?atoi(argv[2]):3);
-  
+
   int64_t numthreads(1);
 
   #if defined(_OPENMP)
@@ -49,49 +49,50 @@ int main(int argc, char* argv[])
     numthreads = omp_get_num_threads();
   }
   #endif
-  
-  cout<<"Number of cores : "<<numthreads<<endl;
-  
+
+  clog<<"[CoUPSU] Number of cores : "<<numthreads<<endl;
+
   omp_set_num_threads((argc>3?atoi(argv[3]):numthreads));
-  cout<<"Number of tasks : "<<(argc>3?atoi(argv[3]):numthreads)<<endl;
-  
+  clog<<"[CoUPSU] Number of tasks : "<<(argc>3?atoi(argv[3]):numthreads)<<endl;
+
   unsigned long m,p,bits;
   if (lambda <= 5)
   {
     vector<int> liste( {380,460,520,580,640,700});
     m=64*1024;p=6143; bits = liste[lambda];
   }
-  else 
+  else
   {
     printf("Too much depth required. Choose 0<=argv[1]<=5\n");
     exit(0);
   }
-  
+
   Context context = ContextBuilder<BGV>()
                                .m(m)
                                .p(p)
-                               .r(1)	
+                               .r(1)
                                .bits(bits)
                                .c(3)
                                .build();
-                               
-  cout<<"Max depth : "<<2*lambda+11<<endl;
-  cout<<"Security : "<<context.securityLevel()<<endl;
-  
+
+  clog<<"[CoUPSU] Max depth : "<<2*lambda+11<<endl;
+  clog<<"[HElib ] Security : "<<context.securityLevel()<<endl;
+
   /* Plaintext space initialisation */
-  zz_p::init((context.getPPowR())); 
+  zz_p::init((context.getPPowR()));
   zz_pE::init(to_zz_pX((*(context.getSlotRing())).G));
-  
-  cout<<"Ptxt space field : F_("<<p<<"^"<<context.getOrdP()<<")"<<endl;
-  cout<<"Slots per Ctxt : "<<context.getNSlots()<<endl;
-  
+
+  clog<<"[HElib ] Ptxt space field : F_("<<p<<"^"<<context.getOrdP()<<")"<<endl;
+  clog<<"[HElib ] Slots per Ctxt : "<<context.getNSlots()<<endl;
+
   bool detail = 1;
   vector<float> timings_R;
   vector<float> timings_S;
+  vector<size_t> communications;
   long S_size = 1024;
   long R_size = pow(2,10+2*lambda);
-  long size_inter;  
-  
+  long size_inter;
+
   for(int i=0;i<nb_test;++i)
   {
     srand(time(NULL));
@@ -100,20 +101,29 @@ int main(int argc, char* argv[])
     vector<zz_pE> R_set(R_size);
     vector<zz_pE>::iterator beg_S_set= S_set.begin();
     vector<zz_pE>::iterator beg_R_set= R_set.begin();
-    
+
     two_rand_sets(beg_R_set, R_size, beg_S_set, S_size, size_inter);
-      
-    UPSU(S_set,R_set,context, detail, timings_R, timings_S);
-    
-    if(bool(size_inter != R_size + S_size - R_set.size())){ cout<<"Correctness Failure!"<<endl;exit(0);}  
+
+    UPSU(S_set,R_set,context, detail, timings_R, timings_S, communications);
+
+    if(bool(size_inter != R_size + S_size - R_set.size())){
+        cerr<<"\033[1;31m##### Correctness Failure! #####\033[0m"<<endl;exit(0);
+    } else {
+        clog<<"\033[1;32m[SUCCESS] Union OK.\033[0m"<<endl;
+    }
     detail = 0;
   }
   sort(timings_R.begin(),timings_R.end());
   sort(timings_S.begin(),timings_S.end());
-   
-  cout<<"... After "<<nb_test<<" protocols :"<<endl;
-  cout<<"Median receiver's time : "<<timings_R[timings_R.size()/2]<<endl;
-  cout<<"Median sender's time : "<<timings_S[timings_S.size()/2]<<endl;
-  
+  size_t volume = std::accumulate(communications.begin(),
+                                  communications.end(), 0);
+  volume /= communications.size();
+
+
+  clog<<"... After "<<nb_test<<" protocols :"<<endl;
+  cout<<"[CoUPSU] Median receiver's time (s) :\t"<<timings_R[timings_R.size()/2]<<endl;
+  cout<<"[CoUPSU] Communication volume (MB) :\t"<<double(volume)/1048576.0<<endl;
+  cout<<"[CoUPSU] Median sender's time (s) :\t"<<timings_S[timings_S.size()/2]<<endl;
+
   return 0;
-} 
+}

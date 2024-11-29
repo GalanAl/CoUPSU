@@ -1,16 +1,16 @@
 // ==========================================================================
 // CoUPSU: Communication Optimal Unbalanced Private Set Union
-// Reference: [ACNS 2025: 23rd International Conference on Applied 
-// Cryptography and Network Security, 
-// J-G. Dumas, A. Galan, B. Grenet, A. Maignan, D. S. Roche, 
+// Reference: [ACNS 2025: 23rd International Conference on Applied
+// Cryptography and Network Security,
+// J-G. Dumas, A. Galan, B. Grenet, A. Maignan, D. S. Roche,
 // https://arxiv.org/abs/2402.16393 ]
 // Authors: J-G Dumas, A. Galan, B. Grenet, A. Maignan, D. S. Roche.
 //
 // This software is governed by the CeCILL-B license under French law and
-// abiding by the rules of distribution of free software.  You can  use, 
+// abiding by the rules of distribution of free software.  You can  use,
 // modify and/ or redistribute the software under the terms of the CeCILL-B
 // license as circulated by CEA, CNRS and INRIA at the following URL
-// "http://www.cecill.info". 
+// "http://www.cecill.info".
 // ==========================================================================
 
 /****************************************************************
@@ -49,7 +49,7 @@ inline void to_root_poly(vector<zz_pEX>::iterator beg, vector<zz_pE>::const_iter
   {
     SetX(*(beg+i));
     *(beg+i) -= *(rootsbeg+i);
-  } 
+  }
   return;
 }
 
@@ -71,7 +71,7 @@ inline void recomposed_poly(zz_pEX& P,vector<zz_pEX>::const_iterator beg, const 
 // Compute P = (X-a_1)x...x(X-a_size) from < a_1,...,a_size >
 inline void build_from_roots(zz_pEX& P, vector<zz_pE>::const_iterator beg, const long size, const Context& context)
 {
-  zz_p::init(context.getPPowR()); 
+  zz_p::init(context.getPPowR());
   zz_pE::init(to_zz_pX((*(context.getSlotRing())).G));
   vector<zz_pEX> to_roots(size);
   to_root_poly(to_roots.begin(), beg, size);
@@ -84,20 +84,20 @@ inline void build_from_roots(zz_pEX& P, vector<zz_pE>::const_iterator beg, const
 // st. P_1x...xP_sqrt(N)|(X-a_1)x...x(X-a_N)
 inline void small_polys(vector<zz_pEX>::iterator beg_polys, const long numb_polys, vector<zz_pE>::const_iterator beg_R_set, const Context& context)
 {
-  #pragma omp parallel for shared(beg_polys,beg_R_set,numb_polys,context) 
-  for(long i=0;i<numb_polys;++i) 
-  { 
-    build_from_roots(*(beg_polys+i), beg_R_set+i*numb_polys, numb_polys,context); 
+  #pragma omp parallel for shared(beg_polys,beg_R_set,numb_polys,context)
+  for(long i=0;i<numb_polys;++i)
+  {
+    build_from_roots(*(beg_polys+i), beg_R_set+i*numb_polys, numb_polys,context);
   }
   return;
 }
 
-// Generate two random plaintext sets with a fixed intersection 
+// Generate two random plaintext sets with a fixed intersection
 // size_inter <= size_2 <= size_1
 inline void two_rand_sets(vector<zz_pE>::iterator beg_S1, const long size_1, vector<zz_pE>::iterator beg_S2, const long size_2, const long size_inter)
 {
   srand(time(NULL));
-  
+
   auto rng = std::default_random_engine {};
   long i;
   for(i=0;i<size_1;++i) *(beg_S1+i) = random_zz_pE();
@@ -106,5 +106,3 @@ inline void two_rand_sets(vector<zz_pE>::iterator beg_S1, const long size_1, vec
   shuffle(beg_S2,beg_S2+size_2,rng);
   return;
 }
-
-
