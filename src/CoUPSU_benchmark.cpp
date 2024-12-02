@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
   unsigned long m,p,bits;
   if (lambda <= 6)
   {
-    vector<int> liste( {380,460,520,580,640,700,750});
+    vector<int> liste( {380,460,520,580,640,700,760});
     m=64*1024;p=6143; bits = liste[lambda];
   }
   else
