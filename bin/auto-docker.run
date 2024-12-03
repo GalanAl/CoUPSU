@@ -17,5 +17,6 @@ apt update
 apt install bash git make g++ cmake wget libgmp-dev libntl-dev
 cd; wget https://raw.githubusercontent.com/GalanAl/CoUPSU/refs/heads/main/bin/coupsu-auto-install.sh
 chmod +x ./coupsu-auto-install.sh ; ./coupsu-auto-install.sh 56
-./libcoupsu/CoUPSU/bin/CoUPSU_benchmark 0 3 32
+./libcoupsu/CoUPSU/bin/CoUPSU_benchmark 0 3
 ./libcoupsu/CoUPSU/bin/CoUPSU_benchmark 1 5 32
+./libcoupsu/CoUPSU/bin/CoUPSU_benchmark 1 5 32 21
