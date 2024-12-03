@@ -31,10 +31,11 @@ int main(int argc, char* argv[])
 // argv[1] <- (log(n)-10)/2 (between 0 and 6)
 // argv[2] <- number of tests (default 3)
 // argv[3] <- number of parallel tasks (default number of threads)
+// argv[4] <- maximum depth allowed by the context (default 2*argv[1]+11)
 
   if(argc <= 1)
   {
-    cerr << "Usage: " << argv[0] << " <(log(n)-10)/2> <number of tests><number of parallel tasks>" << endl;
+    cerr << "Usage: " << argv[0] << " <(log(n)-10)/2> <number of tests><number of parallel tasks><max. allowed depth>" << endl;
     exit(0);
   }
   int lambda = atoi(argv[1]);
@@ -55,11 +56,12 @@ int main(int argc, char* argv[])
   omp_set_num_threads((argc>3?atoi(argv[3]):numthreads));
   clog<<"[CoUPSU] Number of tasks : "<<(argc>3?atoi(argv[3]):numthreads)<<endl;
 
-  unsigned long m,p,bits;
-  if (lambda <= 6)
+  unsigned long m,p,bits, depth;
+  depth =(argc>4? atoi(argv[4]) :2*lambda+11);
+  if (2*lambda+11<=depth and depth <=23)
   {
     vector<int> liste( {380,460,520,580,640,700,760});
-    m=64*1024;p=6143; bits = liste[lambda];
+    m=64*1024;p=6143; bits = liste[(depth-11)/2];
   }
   else
   {
@@ -75,7 +77,7 @@ int main(int argc, char* argv[])
                                .c(3)
                                .build();
 
-  clog<<"[CoUPSU] Max depth : "<<2*lambda+11<<endl;
+  clog<<"[CoUPSU] Max depth : "<<depth<<endl;
   clog<<"[HElib ] Security : "<<context.securityLevel()<<endl;
 
   /* Plaintext space initialisation */
