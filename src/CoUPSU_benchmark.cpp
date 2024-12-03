@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
   depth =(argc>4? atoi(argv[4]) :2*lambda+11);
   if (2*lambda+11<=depth and depth <=23)
   {
-    vector<int> liste( {380,460,520,580,640,700,760});
+    vector<int> liste( {380,460,520,580,640,700,770});
     m=64*1024;p=6143; bits = liste[(depth-11)/2];
   }
   else
